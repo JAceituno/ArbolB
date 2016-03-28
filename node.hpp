@@ -27,11 +27,12 @@ class Node{
 	int getKeyCount()const;
 	bool isLeaf()const;
 	bool isRoot()const;
+	void setFather(Node* father);
 	void addKey(int key, bool promotion = false);
 	void promote();
 	void split(int promoted);
 	void addChild(Node* newNodo);
-	string toString();
+	void toString();
 	void sortChildren();
 };
 bool operator<(const Node &lhs, const Node &rhs);

@@ -25,10 +25,10 @@ void Tree::add(int key){
 	cout << "& & & & & & termina while & & & & & &" << endl;
 }
 void Tree::erase(int key){
-
+	cout << "Not implemented yet" << endl;
 }
 void Tree::display(){
-	cout << root->toString() << endl;
+	root->toString();
 }
 void Tree::save(char* filename){
 

@@ -63,6 +63,9 @@ bool Node::isRoot()const{
 		return true;
 	return false;
 }
+void Node::setFather(Node* father){
+	this->father = father;
+}
 void Node::addKey(int key, bool promotion){
 	if(isRoot()){
 		cout << "soy root" << endl;
@@ -177,18 +180,19 @@ void Node::split(int promoted){
 			cout << "borrando del viejo nodo" << endl;
 		}
 	}
+	sortChildren();
 	if(!isLeaf()){
 		cout << "ENTRE AL NUEVO IF ----------------------------" << endl;
 		int numTemporalParaSplit = getChildCount() +1;
 		cout << numTemporalParaSplit << endl;
 		if(numTemporalParaSplit%2 == 0){
-			for (int i = getChildCount(); i > (getChildCount()+1)/2; --i){
+			for (int i = numTemporalParaSplit-1; i > (numTemporalParaSplit)/2; --i){
 				temp->addChild(children->at(i-1));
 				children->pop_back();
 			}
 		}
 		else{
-			for (int i = getChildCount(); i > getChildCount()/2; --i){
+			for (int i = numTemporalParaSplit-1; i > (numTemporalParaSplit-1)/2; --i){
 				temp->addChild(children->at(i-1));
 				children->pop_back();
 			}
@@ -197,26 +201,25 @@ void Node::split(int promoted){
 	father->addChild(temp);
 }
 void Node::addChild(Node* newNodo){
+	newNodo->setFather(this);
 	children->push_back(newNodo);
 	cout << "agregue nuevo nodo al padre" << endl;
 	sortChildren();
 	cout << "hijos sorted" << endl;
 }
-string Node::toString(){
-	stringstream ss;
-	for (int i = 0; i < tree_level; ++i)	{
-		ss << '\t';
+void Node::toString(){
+	for (int i = 0; i < getTree_level(); ++i){
+		cout << "| " << i << " |";
 	}
-	for (int i = 0; i < keys->size(); ++i) {
-		ss << keys->at(i) << " ";
+	for (int i = 0; i < getKeyCount(); ++i)	{
+		cout << keys->at(i) << " ";
 	}
+	cout << endl;
 	if(!isLeaf()){
-		for (int i = 0; i < children->size(); ++i)	{
-			ss << children->at(i)->toString();
+		for (int i = 0; i < getChildCount(); ++i){
+			children->at(i)->toString();
 		}
 	}
-	ss << '\n';
-	return ss.str();
 }
 
 void Node::sortChildren(){
