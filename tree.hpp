@@ -9,11 +9,13 @@ class Tree{
   	Node* root;
   	vector<int> valores;
   public:
+	Tree();
 	Tree(int order);
 	~Tree();
+	void setOrder(int order);
 	void add(int key);
 	void erase(int key);
 	void display();
-	void save(char* filename);
-	void load(char* filename);
+	void save(const char* filename);
+	void load(const char* filename);
 };

@@ -19,7 +19,7 @@ Node::Node(const Node& other): order(other.getOrder()), father(other.getFather()
 
 Node::~Node(){
 	delete[] keys;
-	/*for (int i = 0; i < childCount; ++i){
+	/*for (int i = 0; i < getChildCount(); ++i){
 		delete children[i];
 	}*/
 	delete[] children;
@@ -68,123 +68,123 @@ void Node::setFather(Node* father){
 }
 void Node::addKey(int key, bool promotion){
 	if(isRoot()){
-		cout << "soy root" << endl;
-		cout << "############## Root values ############################" << endl;
+		////cout << "soy root" << endl;
+		////cout << "############## Root values ############################" << endl;
 		for (int i = 0; i < keys->size(); ++i){
-			cout << keys->at(i) << endl;
+			//cout << keys->at(i) << endl;
 		} 
-		cout << "############### End values ############################" << endl;
+		////cout << "############### End values ############################" << endl;
 
 	}
 	if(!promotion){
-		cout << "validando hoja" << endl;
-		cout << "child count: " << children->size() << endl;
+		////cout << "validando hoja" << endl;
+		////cout << "child count: " << children->size() << endl;
 		if(isLeaf()){
-			cout << "entre al if" << endl;
+			////cout << "entre al if" << endl;
 			keys->push_back(key);
-			cout << "agregue " << key << endl;
-			sort(keys->begin(),keys->end());
+			////cout << "agregue " << key << endl;
+			//sort(keys->begin(),keys->end());
 			if(keys->size() > order-1){
-				cout << "hice un promote" << endl;
+				//cout << "hice un promote" << endl;
 				promote();
 			}
 		}
 		else{
-			cout << "| | | | | | | | Hijos de los hijos | | | | | | | |" << endl;
+			//cout << "| | | | | | | | Hijos de los hijos | | | | | | | |" << endl;
 			for (int i = 0; i < children->size(); ++i)	{
-				cout << "child at " << i << endl;
-				cout << "child count: " << children->at(i)->getChildCount() << endl;
-				cout << "key count:   " << children->at(i)->getKeyCount() << endl;
+				//cout << "child at " << i << endl;
+				//cout << "child count: " << children->at(i)->getChildCount() << endl;
+				//cout << "key count:   " << children->at(i)->getKeyCount() << endl;
 			}
-			cout << "| | | | | | | |  Fin de los hijos  | | | | | | | |" << endl;
-			cout << "entre al else" << endl;
-			cout << "keys size: " << keys->size() << endl;
+			//cout << "| | | | | | | |  Fin de los hijos  | | | | | | | |" << endl;
+			//cout << "entre al else" << endl;
+			//cout << "keys size: " << keys->size() << endl;
 			for (int i = 0; i < keys->size(); ++i)	{
 				if(key < keys->at(0)){
-					cout << "menor que la primera llave nodo intermedio" << endl;
+					//cout << "menor que la primera llave nodo intermedio" << endl;
 					children->at(0)->addKey(key);
 					break;
 				}
 				if(key > keys->at(keys->size()-1)){
-					cout << "mayor que la ultima llave en nodo intermedio" << endl;
+					//cout << "mayor que la ultima llave en nodo intermedio" << endl;
 					children->at(children->size()-1)->addKey(key);
 					break;
 				}
 				if(key > keys->at(i) && key < keys->at(i+1)){
-					cout << "el otro caso" << endl;
+					//cout << "el otro caso" << endl;
 					children->at(i+1)->addKey(key);
 					break;
 				}
 			}
 		}
-		cout << "fin validacion hoja" << endl;
+		//cout << "fin validacion hoja" << endl;
 	}
 	else{
-		cout << "VIP ACCESS. Promoting" << endl;
+		//cout << "VIP ACCESS. Promoting" << endl;
 		keys->push_back(key);
-		cout << "agregue " << key << endl;
+		//cout << "agregue " << key << endl;
 		sort(keys->begin(),keys->end());
 		if(keys->size() > order-1){
-			cout << "hice un promote" << endl;
+			//cout << "hice un promote" << endl;
 			promote();
 		}
 	}
 }
 void Node::promote(){
 	if(father == NULL){	
-		cout << "soy la raiz (promote)" << endl;
+		//cout << "soy la raiz (promote)" << endl;
 		Node* newNodo = new Node(order); 
 		father = newNodo;
 		father->addChild(this);
-		cout << "ahora tengo papa" << endl;
+		//cout << "ahora tengo papa" << endl;
 	}
 	if(order%2 == 0){
-		cout << "orden par" << endl;
+		//cout << "orden par" << endl;
 		int promoted = keys->at(order/2);
-		cout << "voy a promote " << promoted << endl;
+		//cout << "voy a promote " << promoted << endl;
 		father->addKey(promoted, true);
-		cout << "se la mande al padre" << endl;
+		//cout << "se la mande al padre" << endl;
 		keys->erase(keys->begin() + order/2);
-		cout << "borre tranquilo" << endl;
-		cout << "me voy a split" << endl;
+		//cout << "borre tranquilo" << endl;
+		//cout << "me voy a split" << endl;
 		split(promoted);
-		cout << "me split correctly" << endl;
+		//cout << "me split correctly" << endl;
 	}
 	else{
-		cout << "orden impar" << endl;
+		//cout << "orden impar" << endl;
 		int promoted = keys->at((order-1)/2);
-		cout << "voy a promote " << promoted << endl;
+		//cout << "voy a promote " << promoted << endl;
 		father->addKey(promoted, true);
-		cout << "se la mande al padre" << endl;
+		//cout << "se la mande al padre" << endl;
 		keys->erase(keys->begin() +((order-1)/2));
-		cout << "**************Tengo estos valores*********************" << endl;
+		//cout << "**************Tengo estos valores*********************" << endl;
 		for (int i = 0; i < keys->size(); ++i){
-			cout << keys->at(i) << endl;
+			//cout << keys->at(i) << endl;
 		} 
-		cout << "**************Fin valores*****************************" << endl;
-		cout << "borre tranquilo" << endl;
-		cout << "me voy a split" << endl;
+		//cout << "**************Fin valores*****************************" << endl;
+		//cout << "borre tranquilo" << endl;
+		//cout << "me voy a split" << endl;
 		split(promoted);
-		cout << "me split correctly" << endl;
+		//cout << "me split correctly" << endl;
 	}
 }
 void Node::split(int promoted){
-	cout << "en split" << endl;
+	//cout << "en split" << endl;
 	Node* temp = new Node(order, father);
-	cout << "nuevo nodo creado" << endl;
+	//cout << "nuevo nodo creado" << endl;
 	for (int i = order-1; i > 0; --i){
 		if(keys->at(i-1) >= promoted){
 			temp->addKey(keys->at(i-1));
-			cout << "agregando mayores que yo al nodo nuevo" << endl;
+			//cout << "agregando mayores que yo al nodo nuevo" << endl;
 			keys->pop_back();
-			cout << "borrando del viejo nodo" << endl;
+			//cout << "borrando del viejo nodo" << endl;
 		}
 	}
 	sortChildren();
 	if(!isLeaf()){
-		cout << "ENTRE AL NUEVO IF ----------------------------" << endl;
+		//cout << "ENTRE AL NUEVO IF ----------------------------" << endl;
 		int numTemporalParaSplit = getChildCount() +1;
-		cout << numTemporalParaSplit << endl;
+		//cout << numTemporalParaSplit << endl;
 		if(numTemporalParaSplit%2 == 0){
 			for (int i = numTemporalParaSplit-1; i > (numTemporalParaSplit)/2; --i){
 				temp->addChild(children->at(i-1));
@@ -203,13 +203,14 @@ void Node::split(int promoted){
 void Node::addChild(Node* newNodo){
 	newNodo->setFather(this);
 	children->push_back(newNodo);
-	cout << "agregue nuevo nodo al padre" << endl;
+	//cout << "agregue nuevo nodo al padre" << endl;
 	sortChildren();
-	cout << "hijos sorted" << endl;
+	//cout << "hijos sorted" << endl;
 }
 void Node::toString(){
 	for (int i = 0; i < getTree_level(); ++i){
-		cout << "| " << i << " |";
+		////cout << "| " << i << " |";
+		cout << " . ";
 	}
 	for (int i = 0; i < getKeyCount(); ++i)	{
 		cout << keys->at(i) << " ";
